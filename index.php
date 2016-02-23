@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+  <script src="https://code.jquery.com/jquery-2.0.0.js"></script>
 </head>
 <body>
 
