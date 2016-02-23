@@ -71,7 +71,7 @@ function topMoviesCallback(data) {
         $.ajax({
 					dataType: "jsonp",
           //url: baseUrl + '/movies/' + movieID+ '/reviews.json?apikey=' + apikey + '&page_limit=40',
-					url: "http://api.rottentomatoes.com/api/public/v1.0/movies/771390242/reviews.json?apikey=sf8nr5cth5fgm3vdbf6fvtwa&page_limit=40",      
+					url: "https://api.rottentomatoes.com/api/public/v1.0/movies/771390242/reviews.json?apikey=sf8nr5cth5fgm3vdbf6fvtwa&page_limit=40",      
           success: function(data){
               $(".title0").html(data.reviews.freshness);
           }
