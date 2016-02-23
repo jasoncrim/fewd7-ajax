@@ -66,11 +66,12 @@ function topMoviesCallback(data) {
 	movies.forEach(function(movie, index) {
     movieID = movie.id
     console.log("This is my movie ID",movieID);
-    moviesRatingsUrl = baseUrl + '/movies/' + movieID+ '/reviews.json?apikey=' + apikey + '&page_limit=40';
-    console.log(moviesRatingsUrl);
+    //moviesRatingsUrl = baseUrl + '/movies/' + movieID+ '/reviews.json?apikey=' + apikey + '&page_limit=40';
+    //console.log(moviesRatingsUrl);
         $.ajax({
-          url: moviesRatingsUrl,
-          dataType: "json",
+					dataType: "jsonp",
+          //url: baseUrl + '/movies/' + movieID+ '/reviews.json?apikey=' + apikey + '&page_limit=40',
+					url: "http://api.rottentomatoes.com/api/public/v1.0/movies/771390242/reviews.json?apikey=sf8nr5cth5fgm3vdbf6fvtwa&page_limit=40",      
           success: function(data){
               $(".title0").html(data.reviews.freshness);
           }
