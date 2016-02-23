@@ -1,5 +1,5 @@
 var apikey = "sf8nr5cth5fgm3vdbf6fvtwa";
-var baseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+var baseUrl = "https://api.rottentomatoes.com/api/public/v1.0";
 
 //var moviesRatingsUrl = baseUrl + '/movies/' + movieID+ '/reviews.json?apikey=' + apikey;
 var moviesID;
