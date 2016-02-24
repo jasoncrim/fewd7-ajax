@@ -1,1 +1,0 @@
-# fewd7-ajax
