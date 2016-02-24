@@ -11,89 +11,86 @@ var index = [];
 var indexLength;
 var numOfFresh = 0;
 var numOfRotten = 0;
+var baseImageUrl = "http://content8.flixster.com/movie/";
+var newImageUrl;
 
 
-//var movies = data.movies;
-
-//var moviesDiv = "<div>" + movies + "</div>"
-
-// var title = [];
-//
 function searchCallback(data) {
 	//console.log("searchCallback is running");
 	//console.log(data.movies);
 
 	var movies = data.movies;
 
+
+
 		movies.forEach(function(movie, index) {
 
 			moviesRatingsUrl = baseUrl + '/movies/' + movie.id+ '/reviews.json?apikey=' + apikey + '&page_limit=40';
 
       //console.log(moviesRatingsUrl);
+			$.ajax({
+				url: moviesRatingsUrl = baseUrl + '/movies/' + movie.id+ '/reviews.json?apikey=' + apikey + '&page_limit=40',
+				dataType: "jsonp",
 
+
+
+			}).success(function(response){
+				console.log(response.reviews);
+				var freshness=0, rotten=0;
+				response.reviews.forEach(function(review) {
+
+		      //console.log("reviews for each is running");
+		      //  freshness = review.freshness;
+
+		          if(review.freshness == "fresh"){
+		            freshness++;
+		          }else {
+		            rotten++;
+		          }
+
+		    });
+				console.log("freshness: "+freshness+" rotten: "+rotten);
+			//	console.log("Number of reviews: "+response.reviews);
+			});
 			var title = movie.title;
 			var rating = movie.ratings.audience_score;
+			var image = movie.posters.original;
 
-			$(".title" + index).html(title);
-			$(".rating" + index).html(rating);
-
-      //$(".fresh" + index).html(numOfFresh);
-
-      /*index.forEach(function(blah){
-        index[index] = 'new value';
-      });*/
-        indexLength = index;
-        //console.log(indexLength);
-
-
-
-
+			findQualityImage(image);
+			//console.log(image);
+			//console.log(data);
+			$("#title" + index).html(title);
+			$("#rating" + index).html(rating);
+			$("#image" + index).html('<img src="' + newImageUrl + '">');
 
 		});
 
 
 }
 
+function reviewsCallback(data1){
 
-function reviewsCallback(data) {
-  //console.log("reviews callback is running");
 
-  var total = data.total;
-  var reviews = data.reviews;
-
-  console.log(total);
-
-//console.log(reviews);
-
-  	reviews.forEach(function(review) {
-
-      //console.log("reviews for each is running");
-        freshness = review.freshness;
-
-          if(freshness === "fresh"){
-            numOfFresh++;
-          }else if (freshness === "rotten") {
-            numOfRotten++;
-          }else{
-            return;
-          }
-
-    });
-
-    //for(var i=0;i<=indexLength;i++){
-    var counter = 0;
-    console.log(indexLength);
-    if(counter<=indexLength){
-    //  console.log(reviews.length);
-    //  console.log(total);
-      $(".fresh" + counter).html('<span>fresh</span>'+numOfFresh);
-      $(".rotten" + counter).html('<span>rotten</span>'+numOfRotten);
-      counter++;
-    }
-  //  }
 
 
 }
+
+function findQualityImage(image1){
+
+	var rawImgUrl = image1;
+	console.log(rawImgUrl);
+	if(rawImgUrl.indexOf("movie") > -1) {
+			var splitUrl = rawImgUrl.split( '/' );
+		 	var endUrl = splitUrl[7] + "/" + splitUrl[8] + "/" + splitUrl[9] + "/" + splitUrl[10];
+		 	newImageUrl = baseImageUrl + endUrl;
+	 }else{
+		  newImageUrl = rawImgUrl;
+	 }
+	//newUrl = rawImgUrl.substr(0, 10);
+	return newImageUrl;
+	//console.log(newImageUrl);
+}
+
 
 $(document).ready(function() {
   // send off the query
@@ -103,10 +100,12 @@ $(document).ready(function() {
     success: searchCallback
   });
 
-  $.ajax({
+	//sliceString();
+
+/*  $.ajax({
     url: moviesRatingsUrl,
     dataType: "jsonp",
     success: reviewsCallback
-  });
+  });*/
 
 });
